@@ -3,13 +3,16 @@
     package="com.example.aki.transparentactivity">
 
     <application
+        android:name=".AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:clearTaskOnLaunch="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,14 +22,18 @@
         <activity
             android:name=".AlertDialogActivity"
             android:theme="@style/Translucent"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            >
         </activity>
         <service android:name=".TimerIntentService" />
-        <receiver android:name=".TimerReceiver">
+        <!--
+        <receiver android:name=".UnLockReceiver">
             <intent-filter>
-                <action android:name="TIMER_FINISHED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_SCREEN_OFF" />
             </intent-filter>
         </receiver>
+        -->
     </application>
 
 </manifest>
