@@ -27,6 +27,7 @@ public class TimerIntentService extends IntentService {
 
         Intent intent = new Intent();
         intent.setAction("MESSAGE_DIALOG");
+        intent.putExtra("message", "from TimerIntentService");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

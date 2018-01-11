@@ -22,6 +22,8 @@ public class DialogMessageReceiver extends BroadcastReceiver {
             if(AppController.getInstance().isInBackground()) {
                 // ユーザーがアクティブかつアプリがバックグラウンドにいるのでダイアログを表示する
                 Intent intent = new Intent(context, AlertDialogActivity.class);
+                intent.putExtra("message", data.getStringExtra("message"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                 AppController.getInstance().setShowNotificationDialog(true);
 
@@ -34,8 +36,8 @@ public class DialogMessageReceiver extends BroadcastReceiver {
             }
         } else {
             // スリープ状態なのでメッセージを保存して待機
+            Log.i(TAG, "message saved");
             String message = data.getStringExtra("message");
-            message = "dummy"; // TODO ダミーなので後で直す
             AppController.getInstance().setMessageDuringSleep(message);
         }
     }

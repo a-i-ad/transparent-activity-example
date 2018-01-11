@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:clearTaskOnLaunch="true"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,19 +22,27 @@
         </activity>
         <activity
             android:name=".AlertDialogActivity"
-            android:theme="@style/Translucent"
             android:launchMode="singleInstance"
-            >
-        </activity>
+            android:theme="@style/Translucent"></activity>
+
         <service android:name=".TimerIntentService" />
-        <!--
-        <receiver android:name=".UnLockReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.ACTION_SCREEN_OFF" />
-            </intent-filter>
-        </receiver>
-        -->
+        <activity
+            android:name=".DummyActivity"
+            android:label="@string/title_activity_dummy"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service
+            android:name=".ScreenListenerService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+        <service
+            android:name=".DialogMessageListenerService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+
     </application>
 
 </manifest>

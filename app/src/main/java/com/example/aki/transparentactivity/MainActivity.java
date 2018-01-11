@@ -12,10 +12,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final MainActivity self = this;
 
-    private UnLockReceiver receiver = new UnLockReceiver();
-
-    private DialogMessageReceiver dialogMessageReceiver = new DialogMessageReceiver();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +24,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(!AppController.getInstance().isUnLockReceiverRegistered()) {
-            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-            intentFilter.addAction(Intent.ACTION_USER_PRESENT);
-            registerReceiver(receiver, intentFilter);
-            AppController.getInstance().setUnLockReceiverRegistered(true); // レシーバーを登録したのでフラグをON
-        }
+        // サービスを開始してスクリーンのアンロック、スリープを検知できるようにする
+        Intent intent = new Intent(this, ScreenListenerService.class);
+        startService(intent);
 
-        final IntentFilter filter = new IntentFilter();
-        filter.addAction("MESSAGE_DIALOG");
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(dialogMessageReceiver, filter);
+        //
+        Intent dialogMessageListenerService = new Intent(this, DialogMessageListenerService.class);
+        startService(dialogMessageListenerService);
+
     }
 
     @Override
@@ -48,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         AppController.getInstance().setInBackground(true);
+        super.onPause();
     }
 
     @Override
@@ -59,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected  void onDestroy() {
-        super.onDestroy();
         Log.i("MainActivity", "onDestroy");
-        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(dialogMessageReceiver);
+        super.onDestroy();
     }
 }

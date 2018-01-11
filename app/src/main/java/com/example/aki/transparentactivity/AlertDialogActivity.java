@@ -17,7 +17,12 @@ public class AlertDialogActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
         if(AppController.getInstance().isShowNotificationDialog()) {
+            Intent intent = getIntent();
+            String message = intent.getExtras().getString("message");
+            Bundle bundle = new Bundle();
+            bundle.putString("message", message);
             AlertDialogFragment fragment = new AlertDialogFragment();
+            fragment.setArguments(bundle);
             fragment.show(getSupportFragmentManager(), "alert_dialog");
         }else{
             finish();
@@ -39,5 +44,7 @@ public class AlertDialogActivity extends FragmentActivity {
         super.onDestroy();
         Log.i(TAG, "onDestroy");
     }
+
+
 
 }
